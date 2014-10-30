@@ -75,6 +75,13 @@ phpize && ./configure
 
 make && make install
 
+#get go bindings for 3.X
+
+go get -tags zmq_3_x github.com/alecthomas/gozmq
+
+#get go example book
+
+git clone https://github.com/imatix/zguide.git
 
 mkdir -p /etc/php5/conf.d
 
