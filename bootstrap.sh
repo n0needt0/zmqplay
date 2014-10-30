@@ -6,14 +6,14 @@ sudo su
 apt-get update
 
 #pre reqs just to make sure
-sudo apt-get install libtool autoconf automake uuid-dev mercurial build-essential python-software-properties wget git -y
+sudo apt-get install libtool autoconf automake uuid-dev mercurial build-essential python-software-properties wget git pkg-config -y
 
 #install latest php
-sudo add-apt-repository ppa:ondrej/php5
+add-apt-repository ppa:ondrej/php5
 
-sudo apt-get update
-sudo apt-get upgrade
-sudo apt-get install php5
+apt-get update
+apt-get upgrade
+apt-get install php5 php5-dev -y
 
 #install latest golang
 
@@ -55,8 +55,6 @@ cp /vagrant/hwserver.c ./
 
 gcc -o hwserver /vagrant/hwserver.c -lzmq
 
-./hwserver &
-
 echo "building test client"
 
 cp /vagrant/hwclient.c ./
@@ -77,9 +75,8 @@ phpize && ./configure
 
 make && make install
 
-cd .. 
 
-rm -rf php-zmq
+mkdir -p /etc/php5/conf.d
 
 echo "extension=zmq.so" > /etc/php5/conf.d/zmq.ini 
 
