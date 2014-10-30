@@ -6,7 +6,14 @@ sudo su
 apt-get update
 
 #pre reqs just to make sure
-sudo apt-get install libtool autoconf automake uuid-dev mercurial build-essential wget git -y
+sudo apt-get install libtool autoconf automake uuid-dev mercurial build-essential python-software-properties wget git -y
+
+#install latest php
+sudo add-apt-repository ppa:ondrej/php5
+
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt-get install php5
 
 #install latest golang
 
@@ -57,5 +64,23 @@ cp /vagrant/hwclient.c ./
 gcc -o hwclient /vagrant/hwclient.c -lzmq
 
 #go build gwclient.go
+
+#install latest php bindings
+
+echo "installing php bindings"
+
+git clone git://github.com/mkoppanen/php-zmq.git
+
+cd php-zmq
+
+phpize && ./configure
+
+make && make install
+
+cd .. 
+
+rm -rf php-zmq
+
+echo "extension=zmq.so" > /etc/php5/conf.d/zmq.ini 
 
 echo "ssh into box and run ./hwclient to test. dont forget to find and stop hwtest server when done"
