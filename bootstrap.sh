@@ -77,7 +77,7 @@ make && make install
 
 #get go bindings for 3.X
 
-go get -tags zmq_3_x github.com/alecthomas/gozmq
+/usr/local/go/bin/go get -tags zmq_3_x github.com/alecthomas/gozmq
 
 #get go example book
 
