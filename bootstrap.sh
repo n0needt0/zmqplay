@@ -3,7 +3,10 @@
 # Get root up in here
 sudo su
 
-apt-get update
+echo "Installing Base Packages"
+export DEBIAN_FRONTEND=noninteractive
+apt-get update -qq
+apt-get install -qqy --force-yes build-essential bzr git mercurial vim
 
 #pre reqs just to make sure
 sudo apt-get install libtool autoconf automake uuid-dev mercurial build-essential python-software-properties wget git pkg-config -y
@@ -19,6 +22,9 @@ apt-get install php5 php5-dev -y
 
 echo "installing golang"
 
+export GOROOT=/usr/local/go
+export GOPATH=/opt/go
+
 wget https://storage.googleapis.com/golang/go1.3.3.linux-amd64.tar.gz
 
 tar -C /usr/local -xzf go1.3.3.linux-amd64.tar.gz
@@ -26,7 +32,12 @@ tar -C /usr/local -xzf go1.3.3.linux-amd64.tar.gz
 rm go1.3.3.linux-amd64.tar.gz
 
 echo 'export PATH=/vagrant/bin:/usr/local/go/bin:$PATH' >> /home/vagrant/.profile
-echo 'export GOPATH=/vagrant' >> /home/vagrant/.profile
+echo "export GOPATH=$GOPATH" >> /home/vagrant/.profile
+echo "export GOROOT=$GOROOT" >> /home/vagrant/.profile
+
+echo "    Configuring GOPATH"
+
+mkdir -p $GOPATH/src $GOPATH/bin $GOPATH/pkg
 
 chown vagrant:vagrant /home/vagrant/.profile
 
@@ -85,6 +96,6 @@ git clone https://github.com/imatix/zguide.git
 
 mkdir -p /etc/php5/conf.d
 
-echo "extension=zmq.so" > /etc/php5/conf.d/zmq.ini 
+echo "extension=zmq.so" > /etc/php5/cli/conf.d/zmq.ini 
 
 echo "ssh into box and run ./hwclient to test. dont forget to find and stop hwtest server when done"
